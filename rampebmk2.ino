@@ -23,46 +23,51 @@ void setup() {
   pinMode(buzz, OUTPUT);
   irrecv.enableIRIn();
   Serial.begin(9600);
+  myservo.write(90);
 
 }
 
 void loop() {
+  irrecv.decode(&results);
+  Serial.println(results.value);
+    if (results.value == 0xFF30CF){
+        Serial.println("1");
+        rebour();
+      }
+  irrecv.resume();
+  results.value = 0;
+  delay (1000);
+}
 
-  myservo.write(90);
-  digitalWrite(ledrouge, HIGH);
-  if (irrecv.decode(&results))
-    Serial.println("POWER");
-  {
-    if (results.value = 0xFFA25D);
-    irrecv.resume();
-    delay (5000);
+void rebour () {
+    digitalWrite(ledrouge, HIGH);
+    delay (2000);
     digitalWrite(ledrouge, LOW);
     
-  for (int i = 0; i <= 3; i++) {
     digitalWrite(ledorange, HIGH);
-    digitalWrite(buzz, HIGH);
     delay (2000);
-    digitalWrite(ledorange, LOW);
-    digitalWrite(buzz, LOW);
-    delay (1000);
-
-    digitalWrite(ledorange, HIGH);
     digitalWrite(buzz, HIGH);
-    delay (1000);
+    delay (100);
     digitalWrite(ledorange, LOW);
     digitalWrite(buzz, LOW);
+    Serial.println("2");
+    
+    digitalWrite(ledorange, HIGH);
+    delay (1000);
+    digitalWrite(buzz, HIGH);
+    delay (100);
+    digitalWrite(ledorange, LOW);
+    digitalWrite(buzz, LOW);
+    Serial.println("3");
 
     digitalWrite(ledverte, HIGH);
+    delay (1000);
     digitalWrite(buzz, HIGH);
-    delay (3000);
-    digitalWrite(ledverte, LOW);
-    digitalWrite(buzz, LOW);
-
-
+    delay (100);
     myservo.write(0);
     delay (3000);
     digitalWrite(ledverte, LOW);
-    irrecv.resume();
-  }
-}
+    digitalWrite(buzz, LOW);
+    Serial.println("GO");
+   
 }
